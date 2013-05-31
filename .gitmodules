@@ -7,3 +7,4 @@
 [submodule "sources/gemoji"]
 	path = sources/gemoji
 	url = git://github.com/github/gemoji.git
+	ignore = dirty
