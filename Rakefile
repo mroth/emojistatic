@@ -1,10 +1,22 @@
 # Rake::FileUtilsExt.verbose(true)
 require 'bundler'
 require 'rake/clean'
+require 'yaml'
+require_relative 'lib/emojistatic'
 Bundler.require(:build)
 
+##########################################################################
+# Configuration
+##########################################################################
 DESIRED_SIZES = [64,32,24,16]
 
+config_file = File.read('config.yml')
+HOST = YAML.load(config_file)["host"]
+
+
+##########################################################################
+# Emoji images
+##########################################################################
 directory 'tmp/images/emoji'
 EMOJI_SRC_IMAGES = FileList['sources/gemoji/images/emoji/unicode/*.png']
 resized_files = []
@@ -68,6 +80,7 @@ DESIRED_SIZES.each do |px_size|
   file target => required_files do
     puts "Generating cache manifest at #{target}"
     manifesto_cache = Manifesto.cache :directory => source_files_dir, :timestamp => false
+    cleaned_cache = Emojistatic.prefix_manifest( manifesto_cache, HOST + "/images/emoji/#{px_size}" )
 
     File.open(target, 'w') do |f|
       f.write( manifesto_cache )
