@@ -11,11 +11,15 @@ resized_files = []
   sized_pathmap = EMOJI_SRC_IMAGES.pathmap("tmp/images/emoji/#{px_size}/%f")
   sized_pathmap.zip(EMOJI_SRC_IMAGES).each do |target, source|
     file target => ["tmp/images/emoji/#{px_size}", source] do
-      #TODO just copy image if 64px dont resize!
-      puts "resizing image for #{target}"
-      image = MiniMagick::Image.open(source)
-      image.resize "#{px_size}x#{px_size}"
-      image.write target
+      #just copy image if 64px dont resize
+      if px_size == 64
+        cp source, target
+      else
+        puts "resizing (#{px_size}x#{px_size}) #{source} to #{target}"
+        image = MiniMagick::Image.open(source)
+        image.resize "#{px_size}x#{px_size}"
+        image.write target
+      end
     end
   end
   resized_files << sized_pathmap
