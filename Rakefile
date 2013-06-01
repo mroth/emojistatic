@@ -49,10 +49,10 @@ EMOJI_OPTIMIZED_IMAGES.zip(EMOJI_SIZED_IMAGES).each do |target, source|
 end
 # CLOBBER.include(EMOJI_OPTIMIZED_IMAGES)
 
-#file lists for each of the end result sizes
+#file lists for each of the end result size groups, for making spritesheets etc
 optimized_images = {}
 DESIRED_SIZES.each do |px_size|
-  optimized_images[px_size.to_sym] = FileList["build/images/emoji/#{px_size}/*.png"]
+  optimized_images[px_size] = EMOJI_OPTIMIZED_IMAGES.clone.exclude( /emoji\/(?!#{px_size})\d\d\// )
 end
 
 
