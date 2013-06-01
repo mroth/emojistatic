@@ -3,7 +3,7 @@
 Generate a bunch of files useful for static hosting for using emoji on a website.
 
 Contains
-  * gemoji (with images optimized)
+  * gemoji (with images optimized), in 64/32/24/16px variations
   * json data and spritesheets from emoji-data
   * js-emoji library files
   * generated CSS font-face to assist with natively using on Appple devices
@@ -18,6 +18,12 @@ Install brew stuff
 `brew install advancecomp gifsicle jpegoptim jpeg optipng pngcrush`
 pngout if...
 
+imagemagick
+
 Bundle
 
 Rake tasks
+
+
+THanks to
+power rake
