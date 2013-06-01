@@ -3,10 +3,12 @@ require 'bundler'
 require 'rake/clean'
 Bundler.require(:build)
 
+DESIRED_SIZES = [64,32,24,16]
+
 directory 'tmp/images/emoji'
 EMOJI_SRC_IMAGES = FileList['sources/gemoji/images/emoji/unicode/*.png']
 resized_files = []
-[64,32,24,16].each do |px_size|
+DESIRED_SIZES.each do |px_size|
   directory "tmp/images/emoji/#{px_size}"
   sized_pathmap = EMOJI_SRC_IMAGES.pathmap("tmp/images/emoji/#{px_size}/%f")
   sized_pathmap.zip(EMOJI_SRC_IMAGES).each do |target, source|
@@ -47,9 +49,20 @@ EMOJI_OPTIMIZED_IMAGES.zip(EMOJI_SIZED_IMAGES).each do |target, source|
 end
 # CLOBBER.include(EMOJI_OPTIMIZED_IMAGES)
 
+#file lists for each of the end result sizes
+optimized_images = {}
+DESIRED_SIZES.each do |px_size|
+  optimized_images[px_size.to_sym] = FileList["build/images/emoji/#{px_size}/*.png"]
+end
 
+
+
+desc "resize copies of images to tmp directory for processing"
 task :resize_images => EMOJI_SIZED_IMAGES
+desc "created sized and optimized images of all individual emoji"
 task :optimize_images => EMOJI_OPTIMIZED_IMAGES
+
+
 task :default => :optimize_images
 
 directory 'build/libs/js-emoji'
