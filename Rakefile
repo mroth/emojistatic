@@ -35,10 +35,10 @@ directory 'build/images/emoji'
 EMOJI_OPTIMIZED_IMAGES = EMOJI_SIZED_IMAGES.pathmap("%{tmp,build}p")
 EMOJI_OPTIMIZED_IMAGES.zip(EMOJI_SIZED_IMAGES).each do |target, source|
   containing_directory = target.pathmap("%d")
+
   directory containing_directory
   file target => [containing_directory, source] do
     cp source, target
-
     io = ImageOptim.new(:pngout => false)
     size_before =  File.size(target)
     io.optimize_image!(target)
@@ -50,9 +50,30 @@ end
 # CLOBBER.include(EMOJI_OPTIMIZED_IMAGES)
 
 #file lists for each of the end result size groups, for making spritesheets etc
-optimized_images = {}
+OPTIMIZED_IMAGES_BY_PX = {}
 DESIRED_SIZES.each do |px_size|
-  optimized_images[px_size] = EMOJI_OPTIMIZED_IMAGES.clone.exclude( /emoji\/(?!#{px_size})\d\d\// )
+  OPTIMIZED_IMAGES_BY_PX[px_size] = EMOJI_OPTIMIZED_IMAGES.clone.exclude( /emoji\/(?!#{px_size})\d\d\// )
+end
+
+# build cache manifests
+CACHE_MANIFESTS = FileList.new
+DESIRED_SIZES.each do |px_size|
+  target = "build/manifests/emoji-#{px_size}px-images-manifest.appcache"
+  containing_directory = target.pathmap("%d")
+  source_files = OPTIMIZED_IMAGES_BY_PX[px_size]
+  required_files = source_files.add(containing_directory)
+  source_files_dir = source_files.first.pathmap("%d")
+
+  directory containing_directory
+  file target => required_files do
+    puts "Generating cache manifest at #{target}"
+    manifesto_cache = Manifesto.cache :directory => source_files_dir, :timestamp => false
+
+    File.open(target, 'w') do |f|
+      f.write( manifesto_cache )
+    end
+  end
+  CACHE_MANIFESTS.add(target)
 end
 
 
@@ -61,6 +82,8 @@ desc "resize copies of images to tmp directory for processing"
 task :resize_images => EMOJI_SIZED_IMAGES
 desc "created sized and optimized images of all individual emoji"
 task :optimize_images => EMOJI_OPTIMIZED_IMAGES
+desc "build cache manifests for emoji images"
+task :cache_manifests => CACHE_MANIFESTS
 
 
 task :default => :optimize_images
