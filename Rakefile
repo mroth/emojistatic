@@ -5,7 +5,6 @@ Bundler.require(:build)
 
 directory 'tmp/images/emoji'
 EMOJI_SRC_IMAGES = FileList['sources/gemoji/images/emoji/unicode/*.png']
-# PX64_EMOJI_IMAGES = EMOJI_IMAGES.pathmap('build/images/emoji/64/%f')
 resized_files = []
 [64,32,24,16].each do |px_size|
   directory "tmp/images/emoji/#{px_size}"
@@ -29,10 +28,9 @@ CLEAN.include(EMOJI_SIZED_IMAGES)
 directory 'build/images/emoji'
 EMOJI_OPTIMIZED_IMAGES = EMOJI_SIZED_IMAGES.pathmap("%{tmp,build}p")
 EMOJI_OPTIMIZED_IMAGES.zip(EMOJI_SIZED_IMAGES).each do |target, source|
-  #TODO: less ghetto way to obtain current px_size
-  gpx_size = target.match(/\/(\d\d)\//).captures[0]
-  directory "build/images/emoji/#{gpx_size}"
-  file target => ["build/images/emoji/#{gpx_size}", source] do
+  containing_directory = target.pathmap("%d")
+  directory containing_directory
+  file target => [containing_directory, source] do
     cp source, target
 
     io = ImageOptim.new(:pngout => false)
@@ -46,28 +44,9 @@ end
 # CLOBBER.include(EMOJI_OPTIMIZED_IMAGES)
 
 
-
-# directory 'build/images/emoji'
-# EMOJI_IMAGES = FileList['sources/gemoji/images/emoji/unicode/*.png']
-# OPTIMIZED_EMOJI_IMAGES = EMOJI_IMAGES.pathmap('build/images/emoji/%n%x')
-# CLOBBER.include('build/images/emoji')
-
-# OPTIMIZED_EMOJI_IMAGES.zip(EMOJI_IMAGES).each do |target, source|
-#   file target => ['build/images/emoji', source] do
-#     cp source, target
-
-#     io = ImageOptim.new(:pngout => false)
-#     size_before =  File.size(target)
-#     io.optimize_image!(target)
-#     size_after = File.size(target)
-#     size_diff = size_before - size_after
-#     puts "optimized #{target} with savings of #{size_diff} bytes."
-#   end
-# end
-
 task :resize_images => EMOJI_SIZED_IMAGES
 task :optimize_images => EMOJI_OPTIMIZED_IMAGES
-# task :default => :optimize_images
+task :default => :optimize_images
 
 directory 'build/libs/js-emoji'
 JSEMOJI_SRC = FileList['sources/js-emoji/emoji.{css,js}']
