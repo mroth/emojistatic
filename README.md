@@ -15,6 +15,8 @@ All files contain minified and/or gzipped versions as appropriate.  HTML5 app-ca
 `git submodule update --init`
 
 Install brew stuff
+`brew install advancecomp gifsicle jpegoptim jpeg optipng pngcrush`
+pngout if...
 
 Bundle
 
