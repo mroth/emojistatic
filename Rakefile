@@ -134,3 +134,23 @@ CLOBBER.include('build/libs/js-emoji')
 #   namespace :jsemoji do
 #   end
 # end
+
+namespace :ghpages do
+  DEPLOY_DIR = "deploy"
+
+  desc "set up a deploy directory for github pages deploy strategy"
+  task :setup do
+    $pages_repo = 'git@github.com:mroth/emojistatic.git'
+    $pages_branch = 'gh-pages'
+    unless File.directory? DEPLOY_DIR
+      mkdir_p DEPLOY_DIR
+      cd DEPLOY_DIR do
+        sh "git clone -b #{$pages_branch} #{$pages_repo} ."
+      end
+    end
+  end
+  task :setup_force => [:clean, :setup]
+  task :clean do
+    rm_r DEPLOY_DIR
+  end
+end

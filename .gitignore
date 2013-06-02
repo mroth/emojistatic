@@ -2,4 +2,4 @@ Gemfile.lock
 .bundle
 build
 tmp
-
+deploy
