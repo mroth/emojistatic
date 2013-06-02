@@ -8,7 +8,7 @@ Bundler.require(:build)
 ##########################################################################
 # Configuration
 ##########################################################################
-DESIRED_SIZES = [64,32,24,16]
+DESIRED_SIZES = [64,32,24,20,16]
 
 config_file = File.read('config.yml')
 HOST = YAML.load(config_file)["host"]
@@ -59,7 +59,6 @@ EMOJI_OPTIMIZED_IMAGES.zip(EMOJI_SIZED_IMAGES).each do |target, source|
     puts "optimizing image at #{target} - saved #{size_diff} bytes."
   end
 end
-# CLOBBER.include(EMOJI_OPTIMIZED_IMAGES)
 
 #file lists for each of the end result size groups, for making spritesheets etc
 OPTIMIZED_IMAGES_BY_PX = {}
@@ -97,6 +96,8 @@ desc "created sized and optimized images of all individual emoji"
 task :optimize_images => EMOJI_OPTIMIZED_IMAGES
 desc "build cache manifests for emoji images"
 task :cache_manifests => CACHE_MANIFESTS
+
+CLOBBER.include('build/*')
 
 task :build => [:optimize_images, :cache_manifests]
 task :default => :build
