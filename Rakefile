@@ -169,7 +169,7 @@ namespace :ghpages do
   desc "stage then deploy the files to production"
   task :deploy => [:stage] do
     cd DEPLOY_DIR do
-      # sh "git add ."
+      sh "git add ."
       sh "git commit -am 'updating files from master'"
       sh "git push"
     end
