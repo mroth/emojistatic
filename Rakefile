@@ -98,8 +98,8 @@ task :optimize_images => EMOJI_OPTIMIZED_IMAGES
 desc "build cache manifests for emoji images"
 task :cache_manifests => CACHE_MANIFESTS
 
-
-task :default => :optimize_images
+task :build => [:optimize_images, :cache_manifests]
+task :default => :build
 
 directory 'build/libs/js-emoji'
 JSEMOJI_SRC = FileList['sources/js-emoji/emoji.{css,js}']
