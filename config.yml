@@ -1,1 +1,5 @@
 host: http://mroth.github.io/emojistatic
+
+deploy:
+  ghpages_repo: git@github.com:mroth/emojistatic.git
+  ghpages_branch: gh-pages
