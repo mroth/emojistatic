@@ -168,9 +168,10 @@ namespace :ghpages do
   end
   desc "stage then deploy the files to production"
   task :deploy => [:stage] do
+    head = `git log --pretty="%h" -n1`.strip
     cd DEPLOY_DIR do
       sh "git add ."
-      sh "git commit -am 'updating files from master'"
+      sh "git commit -am 'update files to #{head}'"
       sh "git push"
     end
   end
