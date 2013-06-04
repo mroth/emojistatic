@@ -66,7 +66,14 @@ DESIRED_SIZES.each do |px_size|
   OPTIMIZED_IMAGES_BY_PX[px_size] = EMOJI_OPTIMIZED_IMAGES.clone.exclude( /emoji\/(?!#{px_size})\d\d\// )
 end
 
+##########################################################################
+# build embedded css sheets with data-uri
+##########################################################################
+
+
+##########################################################################
 # build cache manifests
+##########################################################################
 CACHE_MANIFESTS = FileList.new
 DESIRED_SIZES.each do |px_size|
   target = "build/manifests/emoji-#{px_size}px-images-manifest.appcache"
