@@ -5,4 +5,5 @@ group :build do
   gem 'image_optim'
   gem 'mini_magick'
   gem 'manifesto'
+  gem 'cssquirt', :git => 'git://github.com/mroth/cssquirt.git'
 end

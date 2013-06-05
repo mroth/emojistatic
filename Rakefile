@@ -69,7 +69,26 @@ end
 ##########################################################################
 # build embedded css sheets with data-uri
 ##########################################################################
+CSS_SHEETS = FileList.new
+DESIRED_SIZES.each do |px_size|
+  target = "build/css-sheets/emoji-#{px_size}px.css"
+  containing_directory = target.pathmap("%d")
+  source_files = OPTIMIZED_IMAGES_BY_PX[px_size]
+  required_files = source_files.add(containing_directory)
+  source_files_dir = source_files.first.pathmap("%d")
 
+  directory containing_directory
+  file target => required_files do
+    puts "Generating css-sheet at #{target}"
+    squirter = CSSquirt::ImageFileList.new source_files
+    doc = squirter.to_css('emoji-',true)
+
+    File.open(target, 'w') do |f|
+      f.write( doc )
+    end
+  end
+  CSS_SHEETS.add(target)
+end
 
 ##########################################################################
 # build cache manifests
@@ -103,6 +122,8 @@ desc "created sized and optimized images of all individual emoji"
 task :optimize_images => EMOJI_OPTIMIZED_IMAGES
 desc "build cache manifests for emoji images"
 task :cache_manifests => CACHE_MANIFESTS
+desc "build css sheets for emoji images"
+task :css_sheets => CSS_SHEETS
 
 CLOBBER.include('build/*')
 
