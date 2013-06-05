@@ -17,14 +17,14 @@ HOST = YAML.load(config_file)["host"]
 ##########################################################################
 # Emoji images
 ##########################################################################
-directory 'tmp/images/emoji'
+directory 'tmp/images'
 EMOJI_SRC_IMAGES = FileList['sources/gemoji/images/emoji/unicode/*.png']
 resized_files = []
 DESIRED_SIZES.each do |px_size|
-  directory "tmp/images/emoji/#{px_size}"
-  sized_pathmap = EMOJI_SRC_IMAGES.pathmap("tmp/images/emoji/#{px_size}/%f")
+  directory "tmp/images/#{px_size}"
+  sized_pathmap = EMOJI_SRC_IMAGES.pathmap("tmp/images/#{px_size}/%f")
   sized_pathmap.zip(EMOJI_SRC_IMAGES).each do |target, source|
-    file target => ["tmp/images/emoji/#{px_size}", source] do
+    file target => ["tmp/images/#{px_size}", source] do
       #just copy image if 64px dont resize
       if px_size == 64
         cp source, target
@@ -43,7 +43,7 @@ end
 EMOJI_SIZED_IMAGES = resized_files.inject(:+)
 CLEAN.include(EMOJI_SIZED_IMAGES)
 
-directory 'build/images/emoji'
+directory 'build/images'
 EMOJI_OPTIMIZED_IMAGES = EMOJI_SIZED_IMAGES.pathmap("%{tmp,build}p")
 EMOJI_OPTIMIZED_IMAGES.zip(EMOJI_SIZED_IMAGES).each do |target, source|
   containing_directory = target.pathmap("%d")
