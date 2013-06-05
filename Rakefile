@@ -81,7 +81,7 @@ DESIRED_SIZES.each do |px_size|
   file target => required_files do
     puts "Generating css-sheet at #{target}"
     squirter = CSSquirt::ImageFileList.new source_files
-    doc = squirter.to_css('emoji-',true)
+    doc = squirter.to_css('emoji',true)
 
     File.open(target, 'w') do |f|
       f.write( doc )
