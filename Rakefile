@@ -74,7 +74,7 @@ DESIRED_SIZES.each do |px_size|
   target = "build/css-sheets/emoji-#{px_size}px.css"
   containing_directory = target.pathmap("%d")
   source_files = OPTIMIZED_IMAGES_BY_PX[px_size]
-  required_files = source_files.add(containing_directory)
+  required_files = source_files.clone.add(containing_directory)
   source_files_dir = source_files.first.pathmap("%d")
 
   directory containing_directory
@@ -98,7 +98,7 @@ DESIRED_SIZES.each do |px_size|
   target = "build/manifests/emoji-#{px_size}px-images-manifest.appcache"
   containing_directory = target.pathmap("%d")
   source_files = OPTIMIZED_IMAGES_BY_PX[px_size]
-  required_files = source_files.add(containing_directory)
+  required_files = source_files.clone.add(containing_directory)
   source_files_dir = source_files.first.pathmap("%d")
 
   directory containing_directory
