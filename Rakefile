@@ -101,6 +101,11 @@ MIN_CSS_SHEETS.zip(CSS_SHEETS).each do |target, source|
 end
 
 GZIP_CSS_SHEETS = MIN_CSS_SHEETS.pathmap('%d/%f.gz')
+GZIP_CSS_SHEETS.zip(MIN_CSS_SHEETS).each do |target, source|
+  file target => source do
+    sh "gzip -c #{source} > #{target}"
+  end
+end
 
 ##########################################################################
 # build cache manifests
@@ -135,11 +140,11 @@ task :optimize_images => EMOJI_OPTIMIZED_IMAGES
 desc "build cache manifests for emoji images"
 task :cache_manifests => CACHE_MANIFESTS
 desc "build css sheets for emoji images"
-task :css_sheets => MIN_CSS_SHEETS
+task :css_sheets => GZIP_CSS_SHEETS
 
 CLOBBER.include('build/*')
 
-task :build => [:optimize_images, :cache_manifests]
+task :build => [:optimize_images, :cache_manifests, :css_sheets]
 task :default => :build
 
 directory 'build/libs/js-emoji'
