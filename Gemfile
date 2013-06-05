@@ -6,4 +6,5 @@ group :build do
   gem 'mini_magick'
   gem 'manifesto'
   gem 'cssquirt', :git => 'git://github.com/mroth/cssquirt.git'
+  gem 'cssmin'
 end

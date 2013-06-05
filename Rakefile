@@ -83,12 +83,24 @@ DESIRED_SIZES.each do |px_size|
     squirter = CSSquirt::ImageFileList.new source_files
     doc = squirter.to_css('emoji',true)
 
-    File.open(target, 'w') do |f|
+    File.open(target,'w') do |f|
       f.write( doc )
     end
   end
   CSS_SHEETS.add(target)
 end
+
+MIN_CSS_SHEETS = CSS_SHEETS.pathmap('%d/%n.min%x')
+MIN_CSS_SHEETS.zip(CSS_SHEETS).each do |target, source|
+  file target => source do
+    File.open(target,'w') do |f|
+      puts "Minifying #{source} to #{target}"
+      f.write( CSSMin.minify(File.read(source)) )
+    end
+  end
+end
+
+GZIP_CSS_SHEETS = MIN_CSS_SHEETS.pathmap('%d/%f.gz')
 
 ##########################################################################
 # build cache manifests
@@ -123,7 +135,7 @@ task :optimize_images => EMOJI_OPTIMIZED_IMAGES
 desc "build cache manifests for emoji images"
 task :cache_manifests => CACHE_MANIFESTS
 desc "build css sheets for emoji images"
-task :css_sheets => CSS_SHEETS
+task :css_sheets => MIN_CSS_SHEETS
 
 CLOBBER.include('build/*')
 
