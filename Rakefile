@@ -63,7 +63,7 @@ end
 #file lists for each of the end result size groups, for making spritesheets etc
 OPTIMIZED_IMAGES_BY_PX = {}
 DESIRED_SIZES.each do |px_size|
-  OPTIMIZED_IMAGES_BY_PX[px_size] = EMOJI_OPTIMIZED_IMAGES.clone.exclude( /emoji\/(?!#{px_size})\d\d\// )
+  OPTIMIZED_IMAGES_BY_PX[px_size] = EMOJI_OPTIMIZED_IMAGES.clone.exclude( /images\/(?!#{px_size})\d\d\// )
 end
 
 ##########################################################################
