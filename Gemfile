@@ -2,9 +2,9 @@ source "https://rubygems.org"
 
 group :build do
   gem 'rake', '~> 10.0.4'
-  gem 'image_optim'
-  gem 'mini_magick'
-  gem 'manifesto'
-  gem 'cssquirt', :git => 'git://github.com/mroth/cssquirt.git'
-  gem 'cssmin'
+  gem 'image_optim', '~> 0.8'
+  gem 'mini_magick', '~> 3.6'
+  gem 'manifesto', '~> 0.7'
+  gem 'cssmin', '~> 1.0'
+  gem 'cssquirt'
 end
