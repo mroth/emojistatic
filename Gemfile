@@ -7,4 +7,5 @@ group :build do
   gem 'manifesto', '~> 0.7'
   gem 'cssmin', '~> 1.0'
   gem 'cssquirt'
+  gem 'emoji_data'
 end
