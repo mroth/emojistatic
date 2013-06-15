@@ -29,7 +29,7 @@ module Emojistatic
         reduced_map << CharRange.new(char.unified)
       end
     end
-    reduced_map.join(',') + ";"
+    reduced_map.join(',')
   end
 
   private

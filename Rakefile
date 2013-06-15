@@ -2,6 +2,7 @@
 require 'bundler'
 require 'rake/clean'
 require 'yaml'
+require 'erb'
 require_relative 'lib/emojistatic'
 Bundler.require(:build)
 
