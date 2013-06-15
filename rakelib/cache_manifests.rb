@@ -22,3 +22,6 @@ DESIRED_SIZES.each do |px_size|
   end
   CACHE_MANIFESTS.add(target)
 end
+
+desc "build cache manifests for emoji images"
+task 'build:cache_manifests' => CACHE_MANIFESTS

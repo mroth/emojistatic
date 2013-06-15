@@ -50,3 +50,6 @@ OPTIMIZED_IMAGES_BY_PX = {}
 DESIRED_SIZES.each do |px_size|
   OPTIMIZED_IMAGES_BY_PX[px_size] = EMOJI_OPTIMIZED_IMAGES.clone.exclude( /images\/(?!#{px_size})\d\d\// )
 end
+
+desc "created sized and optimized images of all individual emoji"
+task 'build:images' => EMOJI_OPTIMIZED_IMAGES

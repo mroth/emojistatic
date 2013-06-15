@@ -52,19 +52,16 @@ require_relative 'rakelib/cache_manifests'
 ##########################################################################
 require_relative 'rakelib/emojifont'
 
-
-desc "resize copies of images to tmp directory for processing"
-task :resize_images => EMOJI_SIZED_IMAGES
-desc "created sized and optimized images of all individual emoji"
-task :optimize_images => EMOJI_OPTIMIZED_IMAGES
-desc "build cache manifests for emoji images"
-task :cache_manifests => CACHE_MANIFESTS
-desc "build css sheets for emoji images"
-task :css_sheets => GZIP_CSS_SHEETS
-
+##########################################################################
+# master task list
+##########################################################################
 CLOBBER.include('build/*')
 
-task :build => [:optimize_images, :cache_manifests, :css_sheets]
+namespace :build do
+  task :default => :all
+  desc "build everything (default)"
+  task :all => [:images, :cache_manifests, :css_sheets, :emojifont]
+end
 task :default => :build
 
 directory 'build/libs/js-emoji'

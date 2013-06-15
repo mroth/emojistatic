@@ -27,7 +27,7 @@ file targetGzip => targetMin do
 end
 
 desc "Generate emojifont CSS ruleset"
-task :emojifont => [target, targetMin, targetGzip]
+task 'build:emojifont' => [target, targetMin, targetGzip]
 task 'clobber:emojifont' do
   rm target
   rm targetMin

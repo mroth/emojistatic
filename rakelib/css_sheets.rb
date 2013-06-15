@@ -32,3 +32,6 @@ GZIP_CSS_SHEETS = MIN_CSS_SHEETS.pathmap('%d/%f.gz')
 GZIP_CSS_SHEETS.zip(MIN_CSS_SHEETS).each do |target, source|
   gzipify(target,source)
 end
+
+desc "build css sheets for emoji images"
+task 'build:css_sheets' => GZIP_CSS_SHEETS
