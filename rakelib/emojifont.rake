@@ -12,8 +12,20 @@ file target => [containing_directory, source] do
   end
 end
 
+targetMin = target.pathmap('%d/%n.min%x')
+file targetMin => target do
+  minify(targetMin, target)
+end
+
+targetGzip = targetMin.pathmap('%d/%f.gz')
+file targetGzip => targetMin do
+  gzipify(targetGzip, targetMin)
+end
+
 desc "Generate emojifont CSS ruleset"
-task :emojifont => target
+task :emojifont => [target, targetMin, targetGzip]
 task 'clobber:emojifont' do
   rm target
+  rm targetMin
+  rm targetGzip
 end
