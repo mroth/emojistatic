@@ -69,6 +69,12 @@ end
 task :build => 'build:all'
 task :default => :build
 
+##########################################################################
+# deployment stuff
+##########################################################################
+task :stage  => [:build, 'ghpages:stage']
+task :deploy => [:build, 'ghpages:deploy']
+
 #TODO: deal with the below for real
 directory 'build/libs/js-emoji'
 JSEMOJI_SRC = FileList['sources/js-emoji/emoji.{css,js}']

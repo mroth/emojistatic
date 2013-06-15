@@ -1,5 +1,4 @@
-task :stage  => ['ghpages:stage']
-task :deploy => ['ghpages:deploy']
+require 'yaml'
 
 config_file = File.read('config.yml')
 PAGES_REPO = YAML.load(config_file)['deploy']['ghpages_repo']
@@ -25,7 +24,7 @@ namespace :ghpages do
   end
 
   desc "just stage the files, but dont actually push"
-  task :stage do
+  task :stage => :not_dirty do
     # remove all existing files, and copy over something clean from build directory
     # this way we'll pick up deleted files as well
     rm_r FileList["#{DEPLOY_DIR}/*"]
@@ -43,9 +42,7 @@ namespace :ghpages do
 
   task :not_dirty do
     #idea stolen from https://github.com/neo/git_immersion/blob/master/Rakefile
-    cd DEPLOY_DIR do
-      fail "Deploy directory not clean!" if /nothing to commit/ !~ `git status`
-    end
+    abort "Main repository is dirty! Can only deploy if otherwise." if /nothing to commit/ !~ `git status`
   end
 
   task :echo_config do
