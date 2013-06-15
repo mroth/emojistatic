@@ -1,7 +1,7 @@
 ---
 ---
 
-em![o](build/images/64/1f60f.png)jistatic!
+em![o](images/24/1f60f.png)jistatic![!](images/24/203c.png)
 ============
 
 Instructions will go here.
