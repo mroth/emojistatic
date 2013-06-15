@@ -35,113 +35,22 @@ end
 ##########################################################################
 # Emoji images
 ##########################################################################
-directory 'tmp/images'
-EMOJI_SRC_IMAGES = FileList['sources/gemoji/images/emoji/unicode/*.png']
-resized_files = []
-DESIRED_SIZES.each do |px_size|
-  directory "tmp/images/#{px_size}"
-  sized_pathmap = EMOJI_SRC_IMAGES.pathmap("tmp/images/#{px_size}/%f")
-  sized_pathmap.zip(EMOJI_SRC_IMAGES).each do |target, source|
-    file target => ["tmp/images/#{px_size}", source] do
-      #just copy image if 64px dont resize
-      if px_size == 64
-        cp source, target
-      else
-        puts "resizing (#{px_size}x#{px_size}) #{source} to #{target}"
-        image = MiniMagick::Image.open(source)
-        image.resize "#{px_size}x#{px_size}"
-        image.write target
-      end
-    end
-  end
-  resized_files << sized_pathmap
-end
-
-# build a file list of the resulting resized images, for mapping and clean
-EMOJI_SIZED_IMAGES = resized_files.inject(:+)
-CLEAN.include(EMOJI_SIZED_IMAGES)
-
-directory 'build/images'
-EMOJI_OPTIMIZED_IMAGES = EMOJI_SIZED_IMAGES.pathmap("%{tmp,build}p")
-EMOJI_OPTIMIZED_IMAGES.zip(EMOJI_SIZED_IMAGES).each do |target, source|
-  containing_directory = target.pathmap("%d")
-
-  directory containing_directory
-  file target => [containing_directory, source] do
-    cp source, target
-    io = ImageOptim.new(:pngout => false)
-    size_before =  File.size(target)
-    io.optimize_image!(target)
-    size_after = File.size(target)
-    size_diff = size_before - size_after
-    puts "optimizing image at #{target} - saved #{size_diff} bytes."
-  end
-end
-
-#file lists for each of the end result size groups, for making spritesheets etc
-OPTIMIZED_IMAGES_BY_PX = {}
-DESIRED_SIZES.each do |px_size|
-  OPTIMIZED_IMAGES_BY_PX[px_size] = EMOJI_OPTIMIZED_IMAGES.clone.exclude( /images\/(?!#{px_size})\d\d\// )
-end
+require_relative 'rakelib/images'
 
 ##########################################################################
 # build embedded css sheets with data-uri
 ##########################################################################
-CSS_SHEETS = FileList.new
-DESIRED_SIZES.each do |px_size|
-  target = "build/css-sheets/emoji-#{px_size}px.css"
-  containing_directory = target.pathmap("%d")
-  source_files = OPTIMIZED_IMAGES_BY_PX[px_size]
-  required_files = source_files.clone.add(containing_directory)
-  source_files_dir = source_files.first.pathmap("%d")
-
-  directory containing_directory
-  file target => required_files do
-    puts "Generating css-sheet at #{target}"
-    squirter = CSSquirt::ImageFileList.new source_files
-    doc = squirter.to_css('emoji',true)
-
-    File.open(target,'w') do |f|
-      f.write( doc )
-    end
-  end
-  CSS_SHEETS.add(target)
-end
-
-MIN_CSS_SHEETS = CSS_SHEETS.pathmap('%d/%n.min%x')
-MIN_CSS_SHEETS.zip(CSS_SHEETS).each do |target, source|
-  minify(target,source)
-end
-
-GZIP_CSS_SHEETS = MIN_CSS_SHEETS.pathmap('%d/%f.gz')
-GZIP_CSS_SHEETS.zip(MIN_CSS_SHEETS).each do |target, source|
-  gzipify(target,source)
-end
+require_relative 'rakelib/css_sheets'
 
 ##########################################################################
 # build cache manifests
 ##########################################################################
-CACHE_MANIFESTS = FileList.new
-DESIRED_SIZES.each do |px_size|
-  target = "build/manifests/emoji-#{px_size}px-images-manifest.appcache"
-  containing_directory = target.pathmap("%d")
-  source_files = OPTIMIZED_IMAGES_BY_PX[px_size]
-  required_files = source_files.clone.add(containing_directory)
-  source_files_dir = source_files.first.pathmap("%d")
+require_relative 'rakelib/cache_manifests'
 
-  directory containing_directory
-  file target => required_files do
-    puts "Generating cache manifest at #{target}"
-    manifesto_cache = Manifesto.cache :directory => source_files_dir, :timestamp => false
-    cleaned_cache = Emojistatic.prefix_manifest( manifesto_cache, HOST + "/images/emoji/#{px_size}" )
-
-    File.open(target, 'w') do |f|
-      f.write( cleaned_cache )
-    end
-  end
-  CACHE_MANIFESTS.add(target)
-end
-
+##########################################################################
+# build emoji font family css
+##########################################################################
+require_relative 'rakelib/emojifont'
 
 
 desc "resize copies of images to tmp directory for processing"

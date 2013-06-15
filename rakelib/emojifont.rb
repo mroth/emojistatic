@@ -1,3 +1,7 @@
+##########################################################################
+# build emoji font family css
+##########################################################################
+
 source = "templates/emojifont/emojifont.css.erb"
 target = "build/emojifont/emojifont.css"
 containing_directory = target.pathmap('%d')
