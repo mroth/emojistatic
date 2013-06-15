@@ -63,10 +63,10 @@ require_relative 'rakelib/documentation'
 CLOBBER.include('build/*')
 
 namespace :build do
-  task :default => :all
   desc "build everything (default)"
   task :all => [:images, :cache_manifests, :css_sheets, :emojifont, :documentation]
 end
+task :build => 'build:all'
 task :default => :build
 
 #TODO: deal with the below for real
