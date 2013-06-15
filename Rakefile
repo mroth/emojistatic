@@ -53,6 +53,11 @@ require_relative 'rakelib/cache_manifests'
 require_relative 'rakelib/emojifont'
 
 ##########################################################################
+# build documentation for hosted version
+##########################################################################
+require_relative 'rakelib/documentation'
+
+##########################################################################
 # master task list
 ##########################################################################
 CLOBBER.include('build/*')
@@ -60,7 +65,7 @@ CLOBBER.include('build/*')
 namespace :build do
   task :default => :all
   desc "build everything (default)"
-  task :all => [:images, :cache_manifests, :css_sheets, :emojifont]
+  task :all => [:images, :cache_manifests, :css_sheets, :emojifont, :documentation]
 end
 task :default => :build
 
