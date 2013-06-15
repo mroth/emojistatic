@@ -64,36 +64,9 @@ namespace :build do
 end
 task :default => :build
 
+#TODO: deal with the below for real
 directory 'build/libs/js-emoji'
 JSEMOJI_SRC = FileList['sources/js-emoji/emoji.{css,js}']
 JSEMOJI_DST = JSEMOJI_SRC.pathmap('build/libs/js-emoji/%f')
 # JSEMOJI_MIN = JSEMOJI_DST.pathmap('%X.min%x'')
 CLOBBER.include('build/libs/js-emoji')
-
-
-# namespace :assets do
-#   namespace :images do
-#     task :default => :all
-#     task :all => [:copy, :optimize]
-
-#     task :copy_to_tmp do
-#       src = "sources/gemoji/images/emoji"
-#       dst = "tmp/images/emoji"
-#       FileUtils.cp_r src, dst  unless File.directory? dst
-#     end
-#     task :optimize => :copy_to_tmp do
-
-#     end
-#     task :copy_to_build do
-#     end
-#   end
-#   task :spritesheets do
-#   end
-#   namespace :css_embedded_images do
-#   end
-# end
-
-# namespace :libraries do
-#   namespace :jsemoji do
-#   end
-# end
