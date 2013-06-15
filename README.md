@@ -41,7 +41,7 @@ Make every byte count.
 Using the pregenerated copies
 -----------------------------
 
-Simply grab the files from the [`/build`](/buid) directory and stick them on AWS S3 or GitHub Pages or whatever.
+Simply grab the files from the [`/build`](/build) directory and stick them on AWS S3 or GitHub Pages or whatever.
 
 You can also use the sample ones hosted with this repository at http://emojistatic.github.io/ !
 
