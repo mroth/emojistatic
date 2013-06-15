@@ -1,3 +1,5 @@
+# ![e](build/images/24/1f4e7.png)![m](build/images/24/24c2.png)![o](build/images/24/1f60f.png)![j](build/images/24/1f3b7.png)![i](build/images/24/2139.png)![s](build/images/24/1f4b0.png)t![a](build/images/24/1f170.png)t![i](build/images/24/1f4cd.png)![c](build/images/24/00a9.png)![!](build/images/24/2757.png)
+
 emojistatic
 ===========
 
