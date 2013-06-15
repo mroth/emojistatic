@@ -13,11 +13,11 @@ Sourced from github/gemoji, but with some advantages.
  - Filesize optimized via `image_optim`.
  - HTML5 appcache files generated for each pixel size.  This will let you easily ensure a user's browser preloads and caches all the images.
  
-#### Emoji image css sheets
+#### Emoji image CSS sheets
  
 If you intend you use the majority of emoji symbols, making 862 seperate HTTP requests can sometimes be a bit much.  Sprite sheets could solve this problem, but have non-trivial memory overhead when being used many with a file of large size.  Thus, we use the Data-URI embedding technique to embed all emoji symbols of a specific pixel size directly into a CSS file.
 
-#### Generated CSS font-face to assist with natively using emoji on supported Apple devices
+#### Generated CSS font-face to assist with natively using Emoji on supported Apple devices
 
 When on a device that supports Emoji natively (for example, Safari on MacOSX 10.7+), you probably will want to use the native support and not fall back to images.
 
