@@ -110,19 +110,12 @@ end
 
 MIN_CSS_SHEETS = CSS_SHEETS.pathmap('%d/%n.min%x')
 MIN_CSS_SHEETS.zip(CSS_SHEETS).each do |target, source|
-  file target => source do
-    File.open(target,'w') do |f|
-      puts "Minifying #{source} to #{target}"
-      f.write( CSSMin.minify(File.read(source)) )
-    end
-  end
+  minify(target,source)
 end
 
 GZIP_CSS_SHEETS = MIN_CSS_SHEETS.pathmap('%d/%f.gz')
 GZIP_CSS_SHEETS.zip(MIN_CSS_SHEETS).each do |target, source|
-  file target => source do
-    sh "gzip -c #{source} > #{target}"
-  end
+  gzipify(target,source)
 end
 
 ##########################################################################
