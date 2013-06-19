@@ -35,8 +35,8 @@ Can be found at the following location pattern:
     /css-sheets/emoji-16px.min.css
     /css-sheets/emoji-16px.min.css.gz
 
-Substitute for the pixel size you want.
+Substitute for the desired pixel size.
 
 ### EmojiFont CSS Ruleset
 
-Is simply located at [`/emojifont/emojifont.css`](/emojifont/emojifont.css) (see also the [minified](/emojifont/emojifont.min.css) and [min+gzipped](/emojifont/emojifont.min.css.gz) versions).
+Is located at [`/emojifont/emojifont.css`](/emojifont/emojifont.css) (see also the [minified](/emojifont/emojifont.min.css) and [min+gzipped](/emojifont/emojifont.min.css.gz) versions).
