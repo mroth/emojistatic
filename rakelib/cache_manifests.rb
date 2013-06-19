@@ -10,6 +10,8 @@ DESIRED_SIZES.each do |px_size|
   required_files = source_files.clone.add(containing_directory)
   source_files_dir = source_files.first.pathmap("%d")
 
+  required_files.add('config.yml') #regenerate if config changes
+
   directory containing_directory
   file target => required_files do
     puts "Generating cache manifest at #{target}"
