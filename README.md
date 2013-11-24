@@ -30,6 +30,10 @@ However, there are some big problems with this:
  
 We solve this problem by generating a custom CSS font-family which maps only the appropriate unicode ranges to the local Apple font, and allows us to fall back to whatever other font we like for the rest of the characters.  Note this technique currently doesn't support double-byte Emoji glyphs (thankfully of which there are only a dozen or so).
 
+Example comparison of using this font on Safari 7.0 on MacOSX 10.9:
+![screenshot](http://f.cl.ly/items/2x0G2E0f1M1l3z0t453o/Screen%20Shot%202013-11-24%20at%204.33.00%20PM.png)
+[(source)](http://codepen.io/mroth/pen/cpLyK)
+
 <!-- TBD
 #### Vendored copies of the js-emoji library
 
