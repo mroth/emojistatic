@@ -14,9 +14,9 @@ Sourced from github/gemoji, but with some advantages.
  - Resized as 64/32/24/20/16px variations.
  - Filesize optimized via `image_optim`.
  - HTML5 appcache files generated for each pixel size.  This will let you easily ensure a user's browser preloads and caches all the images.
- 
+
 #### Emoji image CSS sheets
- 
+
 If you intend you use the majority of emoji symbols, making 862 seperate HTTP requests can sometimes be a bit much.  Sprite sheets could solve this problem, but have non-trivial memory overhead when being used many with a file of large size.  Thus, we use the Data-URI embedding technique to embed all emoji symbols of a specific pixel size directly into a CSS file.
 
 #### Generated CSS font-face to assist with natively using Emoji on supported Apple devices
@@ -27,7 +27,7 @@ However, there are some big problems with this:
 
  - In a text span with mixed Emoji and regular alphanumeric characters (say, for example, rendering tweets), the regular characters will look _horrible_.
  - if you don't force the font, then many common Emoji characters will render as their plain Unicode variants (e.g. &#x270c; versus ![native](build/images/16/270c.png)), which certainly isn't as fun.
- 
+
 We solve this problem by generating a custom CSS font-family which maps only the appropriate unicode ranges to the local Apple font, and allows us to fall back to whatever other font we like for the rest of the characters.  Note this technique currently doesn't support double-byte Emoji glyphs (thankfully of which there are only a dozen or so).
 
 Example comparison of using this font on Safari 7.0 on MacOSX 10.9:
@@ -42,7 +42,7 @@ Since it's pretty awesome and you'll probably end up wanting to use it in conjun
 
 #### All files contain minified and/or gzipped versions
 
-Make every byte count. 
+Make every byte count.
 
 Using the pregenerated copies
 -----------------------------
@@ -62,7 +62,7 @@ Clone the repository, then initialize the submodules via:
 
 You'll need dependencies for image processing, on MacOSX with Homebrew, for example, you would do:
 
-    brew install imagemagick advancecomp gifsicle jpegoptim jpeg optipng pngcrush
+    brew install imagemagick advancecomp gifsicle jhead jpegoptim jpeg optipng pngcrush
 
 Bundle to get ruby dependencies
 
