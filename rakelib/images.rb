@@ -4,6 +4,7 @@
 
 directory 'tmp/images'
 EMOJI_SRC_IMAGES = FileList['sources/gemoji/images/emoji/unicode/*.png']
+EMOJI_SRC_IMAGES = EMOJI_SRC_IMAGES.exclude(/fe0f/) #exclude variant images
 resized_files = []
 DESIRED_SIZES.each do |px_size|
   directory "tmp/images/#{px_size}"
