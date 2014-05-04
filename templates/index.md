@@ -1,6 +1,6 @@
 # ![e](images/24/1f4e7.png)![m](images/24/24c2.png)![o](images/24/1f60f.png)![j](images/24/1f3b7.png)![i](images/24/2139.png)![s](images/24/1f4b0.png)t![a](images/24/1f170.png)t![i](images/24/1f4cd.png)![c](images/24/00a9.png)![!](images/24/2757.png)
 
-This is a hosted instance of [emojistatic](https://github.com/mroth/emojistatic), a set of static resources to help with displaying Emoji symbols on websites.  For a better explanation of what all these files are and why you would want to use them, check out the [README for emojistatic](https://github.com/mroth/emojistatic/README.md).
+This is a hosted instance of [emojistatic](https://github.com/mroth/emojistatic), a set of static resources to help with displaying Emoji symbols on websites.  For a better explanation of what all these files are and why you would want to use them, check out the [README for emojistatic](https://github.com/mroth/emojistatic/blob/master/README.md).
 
 Directory structure
 -------------------
