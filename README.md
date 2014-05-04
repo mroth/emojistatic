@@ -17,7 +17,7 @@ Sourced from github/gemoji, but with some advantages.
 
 #### Emoji image CSS sheets
 
-If you intend you use the majority of emoji symbols, making 862 seperate HTTP requests can sometimes be a bit much.  Sprite sheets could solve this problem, but have non-trivial memory overhead when being used many with a file of large size.  Thus, we use the Data-URI embedding technique to embed all emoji symbols of a specific pixel size directly into a CSS file.
+If you intend you use the majority of emoji symbols, making 862 separate HTTP requests can sometimes be a bit much.  Sprite sheets could solve this problem, but have non-trivial memory overhead when being used many with a file of large size.  Thus, we use the Data-URI embedding technique to embed all emoji symbols of a specific pixel size directly into a CSS file.
 
 #### Generated CSS font-face to assist with natively using Emoji on supported Apple devices
 
